@@ -15,6 +15,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +95,7 @@ public class TimelineActivity extends AppCompatActivity {
                     // 3. Append the new data objects to the existing set of items inside the array of items
                     // 4. Notify the adapter of the new items made with `notifyItemRangeInserted()`
                     adapter.addAll(tweets);
-                } catch (JSONException e) {
+                } catch (JSONException | ParseException e) {
                     Log.e(TAG, "JSON Deserializing error in loadMoreData: ", e);
                 }
             }
@@ -121,7 +122,7 @@ public class TimelineActivity extends AppCompatActivity {
 
                     // tweets.addAll(Tweet.fromJsonArray(jsonArray));
                     // adapter.notifyDataSetChanged();
-                } catch (JSONException e) {
+                } catch (JSONException | ParseException e) {
                     Log.e(TAG, "Error with JSONArray: ", e);
                 }
             }
