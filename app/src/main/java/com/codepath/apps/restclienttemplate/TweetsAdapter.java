@@ -31,6 +31,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         this.tweets = tweets;
     }
 
+    // Swipe to Refresh edits
+    // Clean all elements of the recyclerview
+    public void clear() {
+        tweets.clear();
+        notifyDataSetChanged();
+    }
+    // Add a list of items
+    public void addAll(List<Tweet> tweetList) {
+        tweets.addAll(tweetList);
+        notifyDataSetChanged();
+    }
+
     // For each row, inflate a layout for a tweet
     @NonNull
     @Override
