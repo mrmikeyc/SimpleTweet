@@ -6,5 +6,6 @@
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">cprest</string>
     <string name="TweetButtonText">Tweet</string>
+    <string name="type_what_you_re_thinking"><font size = "50">Type what you\'re thinking!</font></string>
 
 </resources>
