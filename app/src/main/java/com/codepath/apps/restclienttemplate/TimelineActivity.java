@@ -5,9 +5,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.TimeKeyListener;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -21,6 +26,7 @@ import java.util.List;
 
 import okhttp3.Headers;
 
+// This acts as the main activity for our Tweets Application
 public class TimelineActivity extends AppCompatActivity {
 
     private static final String TAG = TimelineActivity.class.getSimpleName();
@@ -31,6 +37,27 @@ public class TimelineActivity extends AppCompatActivity {
     TweetsAdapter adapter;
     SwipeRefreshLayout swipeContainer;
     EndlessRecyclerViewScrollListener scrollListener;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if the menu is present
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+        //return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.compose) {
+            // Compose icon has been tapped
+            // Navigate to compose activity
+            Intent intent = new Intent(this, ComposeActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return false;
+        // return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
