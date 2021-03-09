@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.text.ParseException;
 
@@ -64,6 +66,13 @@ public class ComposeActivity extends AppCompatActivity {
                         try {
                             Tweet tweet = Tweet.fromJson(json.jsonObject);
                             Log.i(TAG, "Published tweet says: " + tweet.body);
+                            Intent intent = new Intent();
+
+                            // Create Parcelable from Tweet to pass back to main activity
+                            intent.putExtra("TWEET", Parcels.wrap(tweet));
+
+                            setResult(RESULT_OK, intent);
+                            finish(); // Closes the actvity when we post
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (ParseException e) {

@@ -5,17 +5,24 @@ import com.codepath.apps.restclienttemplate.ParseRelativeDate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Tweet {
 
     public String body;
     public String createdAt;
     public User user;
     public long id;
+
+    public Tweet() {
+
+    }
 
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException, ParseException {
         Tweet tweet = new Tweet();

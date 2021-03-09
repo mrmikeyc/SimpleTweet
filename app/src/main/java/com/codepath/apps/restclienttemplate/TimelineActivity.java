@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,6 +8,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.method.TimeKeyListener;
 import android.util.Log;
 import android.view.Menu;
@@ -19,6 +21,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import okhttp3.Headers;
 public class TimelineActivity extends AppCompatActivity {
 
     private static final String TAG = TimelineActivity.class.getSimpleName();
+    private static final int COMPOSE_ACTIVITY_REQUEST_CODE = 20;
 
     TwitterClient client;
     RecyclerView rvTweets;
@@ -52,11 +56,34 @@ public class TimelineActivity extends AppCompatActivity {
             // Compose icon has been tapped
             // Navigate to compose activity
             Intent intent = new Intent(this, ComposeActivity.class);
-            startActivity(intent);
+
+            // This will launch the compose activity as a CHILD of this Timeline View
+            startActivityForResult(intent, COMPOSE_ACTIVITY_REQUEST_CODE);
             return true;
         }
         return false;
         // return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.i(TAG, "Received compose activity's result");
+        if (requestCode == COMPOSE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Get data from the intent (tweet object)
+            Tweet tweet = Parcels.unwrap(data.getParcelableExtra("TWEET"));
+
+            // Update the recyclerview manually with this new tweet so we don't have to refresh via API call
+            // Modify data source of the tweets
+            tweets.add(0, tweet);
+
+            // Update the adapter
+            adapter.notifyItemInserted(0);
+
+            // Finally, scroll to the top of the recycler view so we don't have to once we click the tweet button
+            rvTweets.smoothScrollToPosition(0);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
