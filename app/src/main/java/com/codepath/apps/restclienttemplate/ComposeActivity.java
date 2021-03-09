@@ -3,16 +3,28 @@ package com.codepath.apps.restclienttemplate;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.json.JSONException;
+
+import java.text.ParseException;
+
+import okhttp3.Headers;
 
 public class ComposeActivity extends AppCompatActivity {
 
     public static final int MAX_TWEET_LENGTH = 140;
+    public static final String TAG = ComposeActivity.class.getSimpleName();
+
+    TwitterClient client;
     TextInputLayout txtInputLayout;
     EditText etCompose;
     Button btnTweet;
@@ -21,6 +33,8 @@ public class ComposeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
+
+        client = TwitterApp.getRestClient(this);
 
         txtInputLayout = findViewById(R.id.txtInputLayout);
         etCompose = findViewById(R.id.etCompose);
@@ -43,6 +57,25 @@ public class ComposeActivity extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_LONG).show();
+                client.publishTweet(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Headers headers, JSON json) {
+                        Log.i(TAG, "Publishing tweet onSuccess");
+                        try {
+                            Tweet tweet = Tweet.fromJson(json.jsonObject);
+                            Log.i(TAG, "Published tweet says: " + tweet.body);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                        Log.e(TAG, "Publishing tweet failure", throwable);
+                    }
+                }, tweetContent);
             }
         });
     }
