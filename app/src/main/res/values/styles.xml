@@ -8,9 +8,24 @@
         -->
     </style>
 
+    <style name="BlueAppTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/CustomActionBarStyle</item>
+    </style>
+
+    <style name="CustomActionBarStyle" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@color/TwitterBlue</item>
+
+        <!--    For backwards compatibility    -->
+        <item name="background">@color/TwitterBlue</item>
+    </style>
+
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarStyle">@style/CustomActionBarStyle</item>
+
+        <!--    For backwards compatibility    -->
+        <item name="actionBarStyle">@style/CustomActionBarStyle</item>
     </style>
 
     <!--  Compose Tweet Styles for character count  -->
