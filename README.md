@@ -31,7 +31,7 @@ The following **optional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/mrmikeyc/SimpleTweet/blob/post_compose_tweet/SimpleTweets_Walkthrough_Pt2.gif' title='Video Walkthrough' width='360' alt='Video Walkthrough' />
+<img src='https://github.com/mrmikeyc/SimpleTweet/blob/master/SimpleTweets_Walkthrough_Pt2.gif' title='Video Walkthrough' width='360' alt='Video Walkthrough' />
 
 GIF created with ScreenToGif.
 
